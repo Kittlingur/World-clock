@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>World Clock</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    p {
+      margin: 4px 0 0;
+      color: #9ca3af;
+    }
+
+    .clock-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      width: 100%;
+      max-width: 900px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      background: #111827;
+      border-radius: 10px;
+      padding: 16px 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      border: 1px solid #1f2937;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .city-name {
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .country-name {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    .time {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin: 4px 0;
+    }
+
+    .date {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    footer {
+      padding: 10px 20px 20px;
+      font-size: 0.8rem;
+      color: #6b7280;
+      text-align: center;
+    }
+
+    .ad-container {
+      width: 100%;
+      max-width: 900px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- AdSense loader script (only once per page) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4322240421734433"
+    crossorigin="anonymous"></script>
+
+  <header>
+    <h1>World Clock</h1>
+    <p>Current time in different countries</p>
+  </header>
+
+  <!-- Ad #1: under the header -->
+  <div class="ad-container">
+    <!-- REPLACE this block with the ad unit code from AdSense -->
+    <!-- Example format (you will get your own data-ad-slot from AdSense):
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4322240421734433"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    -->
+  </div>
+
+  <main class="clock-grid" id="clockGrid">
+    <!-- Cards will be inserted by JavaScript -->
+  </main>
+
+  <!-- Ad #2: above the footer -->
+  <div class="ad-container">
+    <!-- REPLACE this block with a second ad unit code from AdSense -->
+    <!-- It can be another responsive ad with a different data-ad-slot -->
+    <!-- Example:
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4322240421734433"
+         data-ad-slot="0987654321"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    -->
+  </div>
+
+  <footer>
+    Times are based on your device clock and time zones (IANA).
+  </footer>
+
+  <script>
+    // List of cities/time zones to display
+    const cities = [
+      { city: "New York",      country: "USA",            timeZone: "America/New_York" },
+      { city: "London",        country: "United Kingdom", timeZone: "Europe/London" },
+      { city: "Paris",         country: "France",         timeZone: "Europe/Paris" },
+      { city: "Tokyo",         country: "Japan",          timeZone: "Asia/Tokyo" },
+      { city: "Sydney",        country: "Australia",      timeZone: "Australia/Sydney" },
+      { city: "Dubai",         country: "UAE",            timeZone: "Asia/Dubai" },
+      { city: "São Paulo",     country: "Brazil",         timeZone: "America/Sao_Paulo" },
+      { city: "Johannesburg",  country: "South Africa",   timeZone: "Africa/Johannesburg" },
+      { city: "Reykjavík",     country: "Iceland",        timeZone: "Atlantic/Reykjavik" },
+      { city: "Oslo",          country: "Norway",         timeZone: "Europe/Oslo" }
+    ];
+
+    const grid = document.getElementById("clockGrid");
+
+    // Create cards for each city
+    cities.forEach((item, index) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="card-header">
+          <div>
+            <div class="city-name">${item.city}</div>
+            <div class="country-name">${item.country}</div>
+          </div>
+        </div>
+        <div class="time" id="time-${index}">--:--:--</div>
+        <div class="date" id="date-${index}">Loading...</div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // Function to update all times
+    function updateTimes() {
+      const now = new Date();
+
+      cities.forEach((item, index) => {
+        const optionsTime = {
+          timeZone: item.timeZone,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false
+        };
+
+        const optionsDate = {
+          timeZone: item.timeZone,
+          weekday: "short",
+          year: "numeric",
+          month: "short",
+          day: "numeric"
+        };
+
+        const timeStr = now.toLocaleTimeString([], optionsTime);
+        const dateStr = now.toLocaleDateString([], optionsDate);
+
+        document.getElementById(`time-${index}`).textContent = timeStr;
+        document.getElementById(`date-${index}`).textContent = dateStr;
+      });
+    }
+
+    // Initial call and then update every second
+    updateTimes();
+    setInterval(updateTimes, 1000);
+  </script>
+</body>
+</html>
