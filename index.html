@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>World Clock</title>
+  <title>World Clock – Current Time in Oslo, Reykjavik and Cities Worldwide</title>
+
+  <!-- SEO: meta description -->
+  <meta name="description" content="See the current local time in Oslo, Reykjavik, New York, Tokyo, Sydney, Iceland. A simple world clock that updates every second, perfect for checking time differences and planning meetings across time zones, what time is, what is the clock, clock, whats the time, what's the time, time, time difference, o'clock.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -28,6 +34,15 @@
     p {
       margin: 4px 0 0;
       color: #9ca3af;
+    }
+
+    .intro-text {
+      max-width: 900px;
+      padding: 0 20px 10px;
+      box-sizing: border-box;
+      color: #d1d5db;
+      font-size: 0.95rem;
+      line-height: 1.5;
     }
 
     .clock-grid {
@@ -89,6 +104,8 @@
       margin: 10px 0;
       display: flex;
       justify-content: center;
+      box-sizing: border-box;
+      padding: 0 20px;
     }
   </style>
 </head>
@@ -99,13 +116,26 @@
 
   <header>
     <h1>World Clock</h1>
-    <p>Current time in different countries</p>
+    <p>Current time in Oslo, Reykjavik and cities around the world</p>
   </header>
 
-  <!-- Ad #1: under the header -->
+  <!-- Short intro text for users + SEO -->
+  <section class="intro-text">
+    <p>
+      This world clock shows the current local time in popular cities like Oslo, Reykjavik, London, New York,
+      Tokyo, Sydney, Dubai and more. The times update every second, so you can quickly see what time it is
+      for friends, family, coworkers or gaming partners in different countries.
+    </p>
+    <p>
+      Use this page to check time differences, plan online meetings across time zones, or find a good moment
+      to call someone abroad without waking them up.
+    </p>
+  </section>
+
+  <!-- Ad #1: under the header / intro -->
   <div class="ad-container">
-    <!-- REPLACE this block with the ad unit code from AdSense -->
-    <!-- Example format (you will get your own data-ad-slot from AdSense):
+    <!-- REPLACE this comment with your first AdSense ad unit code -->
+    <!-- Example format (use the ad code from your AdSense account):
     <ins class="adsbygoogle"
          style="display:block"
          data-ad-client="ca-pub-4322240421734433"
@@ -124,9 +154,8 @@
 
   <!-- Ad #2: above the footer -->
   <div class="ad-container">
-    <!-- REPLACE this block with a second ad unit code from AdSense -->
-    <!-- It can be another responsive ad with a different data-ad-slot -->
-    <!-- Example:
+    <!-- REPLACE this comment with your second AdSense ad unit code -->
+    <!-- Example format (second ad unit with its own data-ad-slot):
     <ins class="adsbygoogle"
          style="display:block"
          data-ad-client="ca-pub-4322240421734433"
